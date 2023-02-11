@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    h1 {
+        text-align: center;
+    }
+    #div{
+        margin-left: 500px;
+    }
+    input{
+        width: 250px;
+        height: 20px;
+    }
+    #movie{
+        margin-left: 520px;
+        margin-top: 20px;
+    }
+</style>
+
+<body>
+    <h1>MOVIE SEARCH</h1>
+    <hr>
+    <div id="div">
+        <input type="text" placeholder="movie name" id="name" value="">
+        <button onclick="call()">Search</button>
+    </div>
+    <div id="movie">
+    </div>
+</body>
+<script>
+    async function call() {
+        let box = document.getElementById("new")
+        if(box){
+            let main = document.getElementById("movie")
+            main.removeChild(box)
+        }
+        let result;
+        let movie = document.getElementById("name").value
+        const response = await fetch(`https://www.omdbapi.com/?apikey=91419a78&t=${movie}`)
+        let res = await response.json()
+        console.log(res)
+        result = `<div id="new">
+            <img src=${res.Poster} alt="">
+            <div>Title : ${res.Title}</div>
+            <div>Released Date : ${res.Released}</div>
+            <div>IMBD rating : ${res.imdbRating}</div>
+            <div>Actors : ${res.Actors}</div>
+        </div>
+            `
+        document.getElementById("movie").innerHTML += `${result}`
+
+    }
+</script>
+
+</html>
